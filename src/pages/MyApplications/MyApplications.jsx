@@ -11,12 +11,18 @@ async function fetchJobs(email) {
   return res.json();
 }
 const MyApplications = () => {
-  const { user } = useAuth();
-  const [jobs, setJobs] = useState([]);
-  useEffect(() => {
-    const data = use(fetchJobs(user.email));
-    setJobs(data);
-  }, [user.email]);
+ const { user } = useAuth();
+ const [jobs, setJobs] = useState([]);
+
+ useEffect(() => {
+   async function loadJobs() {
+     const data = await fetchJobs(user.email);
+     setJobs(data);
+   }
+   if (user?.email) {
+     loadJobs();
+   }
+ }, [user?.email]);
 
   return (
     <div>
