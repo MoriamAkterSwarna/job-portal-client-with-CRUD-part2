@@ -14,11 +14,8 @@ const MyApplications = () => {
   const { user } = useAuth();
   const [jobs, setJobs] = useState([]);
   useEffect(() => {
-    const loadJobs = async () => {
-      const data = await fetchJobs(user.email);
-      setJobs(data);
-    };
-    loadJobs();
+    const data = use(fetchJobs(user.email));
+    setJobs(data);
   }, [user.email]);
 
   return (
